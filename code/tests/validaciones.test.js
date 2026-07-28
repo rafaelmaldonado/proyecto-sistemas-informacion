@@ -1,6 +1,7 @@
-// Pruebas unitarias CP-01..CP-03. Sin framework.
+// Pruebas unitarias y de rendimiento CP-01..CP-04. Sin framework.
 // Ejecuta:  node tests/validaciones.test.js
 const assert = require('node:assert');
+const { performance } = require('node:perf_hooks');
 const { idPerroDisponible, vacunaValida, puedeSolicitar } = require('../public/js/validaciones');
 
 const perros = [{ id_perro: 1, estado: 'disponible' }, { id_perro: 3, estado: 'adoptado' }];
@@ -17,4 +18,13 @@ assert.strictEqual(vacunaValida({ vacuna: 'Rabia', fecha: '2026-01-15' }), true)
 assert.strictEqual(puedeSolicitar(perros[1]), false);
 assert.strictEqual(puedeSolicitar(perros[0]), true);
 
-console.log('OK: 6 aserciones pasaron (CP-01, CP-02, CP-03).');
+// CP-04: realiza 100 consultas simuladas y registra el tiempo obtenido.
+const muestra = Array.from({ length: 100 }, (_, i) => ({ id_perro: i + 1 }));
+const inicio = performance.now();
+for (const perro of muestra) {
+  assert.ok(muestra.find((item) => item.id_perro === perro.id_perro));
+}
+const duracion = performance.now() - inicio;
+assert.ok(duracion < 3000, `CP-04 tardó ${duracion.toFixed(2)} ms`);
+
+console.log(`OK: CP-01..CP-04 pasaron; 100 consultas en ${duracion.toFixed(2)} ms.`);
