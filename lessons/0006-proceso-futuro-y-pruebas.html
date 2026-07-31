@@ -1,1 +1,115 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prototipo y privacidad</title><link rel="stylesheet" href="../assets/course.css"></head><body><nav class="site-nav"><a href="../index.html">Inicio</a><a href="0001-auditoria-del-enunciado.html">Contexto</a><a href="0002-diagnostico-del-sistema-actual.html">Encuesta</a><a href="0003-de-problema-a-requisitos.html">Historias</a><a href="0004-modelo-de-datos.html">BD</a><a href="0005-ux-inclusiva.html">Interfaces</a><a href="0006-proceso-futuro-y-pruebas.html" aria-current="page">Prototipo</a><a href="0007-guia-de-comparacion.html">Entrega</a></nav><main class="page"><p class="kicker">Paso 6 · Bloques 4 y 5</p><h1>Estructura completa del prototipo</h1><p class="lede">Esta estructura cubre interfaz, base de datos, pruebas, documentación y evidencias. Crea los archivos que realmente uses; no inventes archivos vacíos solo para que aparezcan en una captura.</p><pre class="diagram"><code>centro-adopcion/<br>├── README.md                         # objetivo, instalación y enlace de demo<br>├── .gitignore<br>├── package.json                       # dependencias y comandos (si usas Node)<br>├── server.js                          # servidor y rutas (si usas Node/Express)<br>├── database/<br>│   ├── schema.sql                     # tablas, PK, FK y restricciones<br>│   ├── seed.sql                       # datos de ejemplo<br>│   └── centro-adopcion.db             # SQLite local; no subir datos reales<br>├── public/<br>│   ├── index.html                     # inicio / acceso<br>│   ├── perros.html                    # lista y búsqueda<br>│   ├── perro-formulario.html          # alta y edición<br>│   ├── expediente.html                # detalle e historial de vacunas<br>│   ├── adopcion.html                  # formulario de solicitud<br>│   ├── solicitudes.html               # revisión y decisión<br>│   ├── privacidad.html                # aviso de privacidad<br>│   ├── css/<br>│   │   ├── variables.css              # colores y tamaños accesibles<br>│   │   ├── layout.css                 # navegación y distribución<br>│   │   └── componentes.css            # botones, campos y mensajes<br>│   ├── js/<br>│   │   ├── app.js                     # inicio y navegación<br>│   │   ├── validaciones.js            # campos, ID único y mensajes<br>│   │   ├── perros.js                  # alta, edición y búsqueda<br>│   │   └── adopciones.js              # solicitud, revisión y decisión<br>│   └── img/logo-placeholder.svg<br>├── tests/<br>│   ├── pruebas-unitarias.md<br>│   └── rendimiento.md<br>├── docs/<br>│   ├── diagrama-er.png<br>│   ├── prototipos-ux.png<br>│   ├── encuesta-y-grafica.png<br>│   └── portafolio-evidencias.pdf<br>└── backups/.gitkeep                   # respaldo real fuera del repo</code></pre><h2>Qué es obligatorio para el primer avance</h2><table><thead><tr><th>Prioridad</th><th>Archivos mínimos</th><th>Qué demuestran</th></tr></thead><tbody><tr><td>1</td><td><code>README.md</code>, <code>database/schema.sql</code>, <code>public/index.html</code></td><td>Repositorio, BD e interfaz base.</td></tr><tr><td>2</td><td><code>perro-formulario.html</code>, <code>perros.html</code>, <code>css/</code>, <code>js/validaciones.js</code></td><td>Registro, consulta y accesibilidad.</td></tr><tr><td>3</td><td><code>adopcion.html</code>, <code>solicitudes.html</code>, <code>tests/</code>, <code>docs/</code></td><td>Flujo completo y evidencia de calidad.</td></tr></tbody></table><h2>Hardening técnico: decisión y evidencia</h2><p>Documenta sólo las tecnologías que realmente usaste. La eficiencia se justifica contra el equipo, conexión, presupuesto y conocimientos del cliente; “es popular” no basta.</p><table><thead><tr><th>Elemento</th><th>Por qué encaja en el entorno</th><th>Evidencia</th></tr></thead><tbody><tr><td>HTML/CSS/JavaScript</td><td>Funciona en navegador y cubre una interfaz sencilla sin instalar software adicional.</td><td>Captura de la interfaz y archivos ejecutándose.</td></tr><tr><td>SQLite o MySQL</td><td>Elige SQLite para un equipo y operación local; MySQL si varios usuarios necesitan acceso concurrente.</td><td>Captura de tablas, PK, FK y una consulta.</td></tr><tr><td>Editor y GitHub/GitLab</td><td>Permiten desarrollar, conservar historial y entregar un enlace verificable.</td><td>Captura del editor, commits y URL del repositorio.</td></tr><tr><td>Framework y servidor</td><td>Inclúyelos sólo si tu solución los usa y explica qué necesidad concreta resuelven.</td><td>Comando o pantalla donde estén funcionando.</td></tr></tbody></table><div class="note"><strong>Regla:</strong> no declares tecnologías que no puedas abrir y explicar durante la validación presencial.</div><h2>Privacidad y cifrado implementado</h2><p><strong>Aviso base para adaptar:</strong> “[Nombre de la organización] recaba [datos] para [finalidad]. No los comparte sin autorización. La persona puede solicitar acceso, corrección o eliminación mediante [contacto del responsable]”.</p><table><thead><tr><th>Medida</th><th>Qué protege</th><th>Cómo demostrarla</th></tr></thead><tbody><tr><td>HTTPS</td><td>Cifra los datos mientras viajan entre navegador y servidor.</td><td>Abre la aplicación publicada con HTTPS y captura la URL segura.</td></tr><tr><td>Hash de contraseñas</td><td>Evita guardar contraseñas recuperables; no es cifrado reversible.</td><td>Muestra la función o biblioteca usada y un valor almacenado que no revele la contraseña.</td></tr><tr><td>Respaldo cifrado</td><td>Protege la copia de la base de datos cuando está guardada.</td><td>Crea una copia cifrada y documenta una prueba de restauración.</td></tr></tbody></table><div class="checkpoint"><strong>Obligatorio:</strong> implementa al menos una medida de cifrado que aplique a tu solución, toma evidencia y explica qué amenaza reduce. Validar campos o hacer respaldos ayuda, pero por sí solo no demuestra cifrado.</div><h2>Ética digital</h2><ul><li>Recaba sólo los datos necesarios y explica su finalidad.</li><li>No publiques datos personales reales en GitHub, capturas o datos de prueba.</li><li>Limita el acceso administrativo y permite corregir o eliminar información.</li><li>Mantén accesibilidad, exactitud y respaldo como compromisos del sistema.</li><li>Relaciona estas decisiones con el lineamiento institucional que te indique el docente; no inventes una norma.</li></ul><h2>Mantenimiento preventivo</h2><table><thead><tr><th>Frecuencia</th><th>Actividad</th><th>Responsable</th><th>Evidencia</th></tr></thead><tbody><tr><td>Semanal</td><td>Crear respaldo y comprobar que el archivo abre.</td><td>Responsable del sistema</td><td>Registro de respaldo.</td></tr><tr><td>Mensual</td><td>Ejecutar pruebas y aplicar actualizaciones necesarias.</td><td>Desarrollador</td><td>Resultado de pruebas y commit.</td></tr><tr><td>Semestral</td><td>Revisar requisitos, accesos y aviso de privacidad.</td><td>Organización y desarrollador</td><td>Acta breve de revisión.</td></tr></tbody></table><div class="checkpoint"><strong>Capturas requeridas:</strong> árbol de archivos, código, tablas creadas, interfaz funcional, historial de Git y enlace al repositorio.</div><div class="note"><strong>Código de ejemplo listo:</strong> en la carpeta <code>code/</code> de esta guía tienes <a href="../code/database/schema.sql"><code>database/schema.sql</code></a>, <a href="../code/database/seed.sql"><code>database/seed.sql</code></a>, <a href="../code/public/js/validaciones.js"><code>public/js/validaciones.js</code></a> (reglas ID único, vacuna con fecha, perro disponible) y <a href="../code/tests/validaciones.test.js"><code>tests/validaciones.test.js</code></a> (CP-01..CP-04, incluyendo 100 consultas simuladas). Corre las pruebas con <code>node code/tests/validaciones.test.js</code> y toma captura del resultado.</div><details class="defense"><summary>Prepárate para la defensa (15 min · 40%)</summary><p>Responde en voz alta, sin leer la guía. Si te trabas, aún no lo entendiste: vuelve al tema antes del examen.</p><ul><li>¿Qué tecnologías usaste (lenguaje, BD, editor, servidor) y por qué cada una?</li><li>¿Por qué SQLite (o MySQL) y no una hoja de cálculo?</li><li>Recorre la estructura de carpetas de tu proyecto y di qué hace cada una.</li><li>¿Qué valida tu archivo validaciones.js? Explica una de las reglas.</li><li>¿Qué datos recabas y qué dice tu aviso de privacidad al respecto?</li><li>¿Qué medidas de seguridad implementaste (contraseñas, HTTPS, respaldos)?</li><li>¿Por qué las contraseñas nunca se guardan en texto plano?</li></ul></details></main></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prototipo y privacidad</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../index.html">Inicio</a><a href="0001-auditoria-del-enunciado.html">Contexto</a><a href="0002-diagnostico-del-sistema-actual.html">Encuesta</a><a href="0003-de-problema-a-requisitos.html">Historias</a><a href="0004-modelo-de-datos.html">BD</a><a href="0005-ux-inclusiva.html">Interfaces</a><a href="0006-proceso-futuro-y-pruebas.html" aria-current="page">Prototipo</a><a href="0007-guia-de-comparacion.html">Entrega</a>
+  </nav>
+  <main class="page">
+    <p class="kicker">Paso 6 · Bloques 4 y 5</p>
+    <h1>Prototipo ejecutable y alcance futuro</h1>
+    <p class="lede">La evidencia debe coincidir con lo que realmente existe. Este prototipo implementa inicio, alta y consulta de perros con Node.js y SQLite; los demás módulos se presentan como trabajo futuro, no como funciones terminadas.</p>
+
+    <h2>Árbol de archivos implementado</h2>
+<pre class="diagram"><code>code/
+├── index.html                        # instalación y ejecución paso a paso
+├── defensa.html                      # validación de conocimiento
+├── server.js                         # servidor HTTP y API de perros
+├── backup.js                         # respaldo cifrado y restauración
+├── database/
+│   ├── schema.sql                    # tablas, PK, FK y restricciones
+│   ├── seed.sql                      # datos de ejemplo opcionales
+│   └── centro-adopcion.db            # se crea al ejecutar; no se publica
+├── public/
+│   ├── index.html                    # panel principal
+│   ├── registrar.html                # interfaz de entrada
+│   ├── perros.html                   # interfaz de salida
+│   ├── styles.css                    # contraste, texto y distribución
+│   ├── app.js                        # alta y consulta mediante la API
+│   └── js/
+│       └── validaciones.js           # reglas compartidas CP-01..CP-03
+└── tests/
+    ├── database.test.js              # alta, consulta y datos inválidos
+    ├── validaciones.test.js          # CP-01..CP-04
+    └── backup.test.js                # cifrado, restauración y clave errónea</code></pre>
+    <div class="checkpoint"><strong>Evidencia:</strong> muestra este árbol real, las tres pantallas abiertas desde <code>http://localhost:8000</code>, las tablas y el resultado de las pruebas. No agregues archivos vacíos para completar una captura.</div>
+
+    <h2>Cómo ejecutar el prototipo</h2>
+    <ol class="steps">
+      <li>Instala Node 24 LTS y comprueba la versión con <code>node --version</code>.</li>
+      <li>Desde la raíz del proyecto ejecuta <code>node code/server.js</code>.</li>
+      <li>Mantén la terminal abierta y visita <code>http://localhost:8000</code>.</li>
+      <li>Detén el servidor con <code>Ctrl + C</code> antes de cerrar.</li>
+    </ol>
+    <p>Las instrucciones completas de instalación, ejecución y pruebas están en <a href="../code/index.html">Código de ejemplo ejecutable</a>.</p>
+
+    <h2>Tecnologías realmente utilizadas</h2>
+    <table>
+      <thead><tr><th>Tecnología</th><th>Uso en el prototipo</th><th>Evidencia</th></tr></thead>
+      <tbody>
+        <tr><td>HTML/CSS</td><td>Tres pantallas navegables con texto grande, contraste y etiquetas.</td><td><code>public/</code> y capturas del navegador.</td></tr>
+        <tr><td>JavaScript en navegador</td><td>Envía el formulario y construye el listado sin insertar HTML recibido.</td><td><code>public/app.js</code>.</td></tr>
+        <tr><td>Node.js</td><td>Sirve las pantallas, valida datos y expone <code>/api/perros</code>.</td><td><code>server.js</code> ejecutándose.</td></tr>
+        <tr><td>SQLite</td><td>Conserva perros y aplica claves y restricciones.</td><td><code>schema.sql</code>, archivo local y consulta.</td></tr>
+        <tr><td>AES-256-GCM</td><td>Cifra el respaldo local y detecta una clave incorrecta o un archivo alterado.</td><td><code>backup.js</code>, archivo <code>.enc</code> y restauración.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Privacidad y cifrado coherentes con un prototipo local</h2>
+    <p><strong>Aviso base para adaptar:</strong> “[Nombre de la organización] recaba [datos] para [finalidad]. No los comparte sin autorización. La persona puede solicitar acceso, corrección o eliminación mediante [contacto del responsable]”.</p>
+    <div class="note"><strong>HTTPS no está implementado en este prototipo local.</strong> La dirección usa <code>http://localhost:8000</code>. HTTPS se propondrá sólo si la versión final se publica en un servidor; no debe presentarse como evidencia actual.</div>
+    <p>La medida implementada es el respaldo cifrado. La contraseña se entrega mediante la variable temporal <code>BACKUP_PASSWORD</code>, nunca se escribe dentro del código ni se publica.</p>
+    <h3>macOS o Linux</h3>
+    <pre><code>BACKUP_PASSWORD='una-clave-larga-y-privada' node code/backup.js crear
+BACKUP_PASSWORD='una-clave-larga-y-privada' node code/backup.js restaurar</code></pre>
+    <h3>Windows PowerShell</h3>
+    <pre><code>$env:BACKUP_PASSWORD='una-clave-larga-y-privada'
+node code/backup.js crear
+node code/backup.js restaurar
+Remove-Item Env:BACKUP_PASSWORD</code></pre>
+    <p>La restauración escribe <code>centro-adopcion.restaurada.db</code> y nunca sobrescribe la base activa. Para la evidencia, demuestra que la clave correcta restaura y que una clave distinta falla.</p>
+
+    <h2>Módulos sugeridos para una implementación final</h2>
+    <pre class="diagram"><code>Versión final posible
+├── autenticación y roles             # si habrá funciones administrativas
+├── vacunas e historial               # alta y consulta de salud
+├── solicitudes de adopción           # envío, revisión y decisión
+├── edición de expedientes            # cuando se confirme esa necesidad
+├── respaldos programados             # cuando exista operación periódica
+└── despliegue con HTTPS               # sólo al publicar en un servidor</code></pre>
+    <p>Estos módulos derivan de las historias del alcance, pero no se crean todavía. Cada uno debe añadirse cuando exista tiempo, criterio de aceptación y una prueba que lo justifique.</p>
+
+    <h2>Ética y mantenimiento</h2>
+    <ul>
+      <li>Usa únicamente datos ficticios en el repositorio, las capturas y las pruebas.</li>
+      <li>No publiques la base <code>.db</code>, el respaldo <code>.enc</code> ni la contraseña.</li>
+      <li>Permite corregir o eliminar información cuando el módulo correspondiente exista.</li>
+      <li>Mantén accesibilidad, exactitud y respaldo como compromisos del sistema.</li>
+    </ul>
+    <table>
+      <thead><tr><th>Frecuencia</th><th>Actividad</th><th>Evidencia</th></tr></thead>
+      <tbody>
+        <tr><td>Semanal</td><td>Crear respaldo cifrado y probar una restauración.</td><td>Fecha, archivo y resultado.</td></tr>
+        <tr><td>Mensual</td><td>Ejecutar las tres pruebas automatizadas.</td><td>Salida <code>OK</code> y commit.</td></tr>
+        <tr><td>Antes de publicar</td><td>Configurar HTTPS y verificar el certificado.</td><td>URL pública segura; no aplica al prototipo local.</td></tr>
+      </tbody>
+    </table>
+
+    <details class="defense">
+      <summary>Validación de conocimiento para la defensa</summary>
+      <ul>
+        <li>Recorre una alta desde <code>registrar.html</code> hasta el <code>INSERT</code> y después muestra el <code>SELECT</code> en <code>perros.html</code>.</li>
+        <li>Explica por qué <code>localhost</code> usa HTTP y por qué no debes afirmar que implementaste HTTPS.</li>
+        <li>Predice qué ocurre si restauras con una clave incorrecta y luego demuéstralo.</li>
+        <li>Explica qué protege el respaldo cifrado y qué no protege mientras la aplicación está abierta.</li>
+        <li>Distingue un archivo implementado de un módulo futuro sin leer el árbol.</li>
+      </ul>
+    </details>
+  </main>
+</body>
+</html>

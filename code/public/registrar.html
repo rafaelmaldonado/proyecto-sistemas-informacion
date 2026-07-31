@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar perro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="marca" href="index.html">Centro de adopción</a>
+    <nav aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a aria-current="page" href="registrar.html">Registrar perro</a>
+      <a href="perros.html">Consultar expedientes</a>
+    </nav>
+  </header>
+  <main class="app-main pagina-formulario">
+    <section aria-labelledby="titulo-registro">
+      <h1 id="titulo-registro">Registrar perro</h1>
+      <form id="formulario">
+        <label for="id_perro">ID del perro</label>
+        <input id="id_perro" name="id_perro" type="number" min="1" required>
+
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" required>
+
+        <label for="raza">Raza</label>
+        <input id="raza" name="raza">
+
+        <button>Guardar perro</button>
+        <p id="mensaje" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <p class="descripcion">El empleado captura los datos básicos. Las etiquetas están sobre los campos, el texto es grande y el botón indica su acción.</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

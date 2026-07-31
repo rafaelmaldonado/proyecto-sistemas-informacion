@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expedientes registrados</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="marca" href="index.html">Centro de adopción</a>
+    <nav aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar perro</a>
+      <a aria-current="page" href="perros.html">Consultar expedientes</a>
+    </nav>
+  </header>
+  <main class="app-main pagina-listado">
+    <section aria-labelledby="titulo-listado">
+      <h1 id="titulo-listado">Expedientes registrados</h1>
+      <p id="mensaje" role="status" aria-live="polite">Consultando la base de datos…</p>
+      <table>
+        <caption>Perros almacenados en la base de datos</caption>
+        <thead><tr><th>ID</th><th>Nombre</th><th>Estado</th></tr></thead>
+        <tbody id="perros"></tbody>
+      </table>
+    </section>
+    <p class="descripcion">El empleado consulta expedientes en una lista legible. El estado aparece como texto y no depende sólo del color.</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

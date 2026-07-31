@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Defensa del prototipo</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <nav class="site-nav"><a href="index.html">Código</a></nav>
+  <main class="page">
+    <p class="kicker">Proceso y validación de conocimiento</p>
+    <h1>Defender el prototipo con evidencia</h1>
+    <p class="lede">La meta no es confirmar que el ejemplo funciona, sino intentar refutarlo, explicar por qué funciona y transferir la idea a otro caso.</p>
+
+    <h2>1. Separar requisito, decisión y evidencia</h2>
+    <table>
+      <thead><tr><th>Tipo</th><th>Afirmación</th><th>Cómo se comprueba</th></tr></thead>
+      <tbody>
+        <tr><td>Requisito documentado</td><td>El diseño incluye prototipos de entrada y salida; desarrollo incluye código, BD y repositorio.</td><td>Consigna y matriz de trazabilidad.</td></tr>
+        <tr><td>Inferencia técnica</td><td>Conectar alta y consulta permite demostrar coherencia entre interfaz, código y BD; no implica construir todo el CRUD.</td><td>Captura propia y trazabilidad con RF-01.</td></tr>
+        <tr><td>Decisión técnica</td><td>Este ejemplo usa JavaScript en navegador y servidor, más SQLite; no son tecnologías obligatorias.</td><td><code>server.js</code>, <code>schema.sql</code> y justificación según el entorno.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Control de sesgo:</strong> no confundas una decisión del ejemplo con una obligación oficial ni una ejecución exitosa con comprensión.</div>
+
+    <h2>2. Explicar el recorrido</h2>
+    <ol class="steps">
+      <li>El formulario reúne ID, nombre y raza, como el prototipo de entrada.</li>
+      <li><code>app.js</code> convierte los campos a JSON y hace <code>POST /api/perros</code>.</li>
+      <li><code>server.js</code> vuelve a validar los datos y ejecuta un <code>INSERT</code> parametrizado.</li>
+      <li>SQLite conserva el registro y su clave primaria impide IDs repetidos.</li>
+      <li>La interfaz hace <code>GET /api/perros</code>; el servidor ejecuta <code>SELECT</code> y la tabla muestra el resultado.</li>
+    </ol>
+
+    <h2>3. Intentar refutar antes de aceptar</h2>
+    <table>
+      <thead><tr><th>Prueba</th><th>Predicción escrita antes de ejecutar</th><th>Evidencia esperada</th></tr></thead>
+      <tbody>
+        <tr><td>Registrar un ID nuevo.</td><td>¿Qué capas participan y qué debe cambiar?</td><td>Mensaje, nueva fila y registro en SQLite.</td></tr>
+        <tr><td>Repetir el mismo ID.</td><td>¿Qué capa debe rechazarlo y por qué?</td><td>Error visible y una sola fila en la BD.</td></tr>
+        <tr><td>Enviar nombre vacío o ID cero.</td><td>¿Qué valida el navegador y qué valida el servidor?</td><td>No se crea el registro aun si se evita la interfaz.</td></tr>
+        <tr><td>Recargar la página.</td><td>¿Debe conservarse la información?</td><td>El listado vuelve a consultar el archivo SQLite.</td></tr>
+      </tbody>
+    </table>
+    <p>Contrasta tres fuentes: la pantalla, la prueba automatizada y una consulta directa con <code>sqlite3</code>. Si discrepan, no elijas la que confirma tu expectativa: investiga la diferencia.</p>
+
+    <h2>4. Validación para la defensa</h2>
+    <p>Otra persona marca cada criterio durante una demostración sin apuntes. “Lo vi en el código” no cuenta como explicación.</p>
+    <table>
+      <thead><tr><th>Criterio observable</th><th>Logrado cuando…</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>Explicación causal</td><td>Recorres formulario, petición, validación, SQL y respuesta en orden.</td><td>☐</td></tr>
+        <tr><td>Predicción</td><td>Anticipas el resultado de un duplicado antes de ejecutarlo y justificas por qué.</td><td>☐</td></tr>
+        <tr><td>Demostración</td><td>Registras, consultas y produces un error controlado en vivo.</td><td>☐</td></tr>
+        <tr><td>Diagnóstico</td><td>Explicas qué revisarías si la pantalla confirma el alta pero la BD no contiene la fila.</td><td>☐</td></tr>
+        <tr><td>Transferencia</td><td>Explicas qué tabla, campos y reglas cambiarías para otra organización.</td><td>☐</td></tr>
+      </tbody>
+    </table>
+
+    <details class="defense">
+      <summary>Preguntas de seguimiento del evaluador</summary>
+      <ul>
+        <li>¿Por qué se valida en HTML y otra vez en el servidor?</li>
+        <li>¿Qué evita que dos perros tengan el mismo ID?</li>
+        <li>¿Por qué el SQL usa signos <code>?</code> en lugar de concatenar texto?</li>
+        <li>¿Qué diferencia existe entre memoria del navegador y persistencia en SQLite?</li>
+        <li>¿Qué evidencia demuestra el <code>INSERT</code> y cuál demuestra el <code>SELECT</code>?</li>
+      </ul>
+    </details>
+
+    <div class="checkpoint"><strong>Puerta de salida:</strong> presenta sólo cuando completes los cinco criterios dos veces: una con el recorrido normal y otra con un dato inválido elegido por el evaluador.</div>
+
+    <h2>5. Seguridad sin afirmar HTTPS</h2>
+    <p>Este prototipo usa HTTP local. La evidencia de cifrado es el respaldo creado por <code>backup.js</code>; HTTPS queda como módulo futuro si la aplicación se publica.</p>
+    <ul>
+      <li>Crea un respaldo, restáuralo con la clave correcta y muestra el archivo resultante.</li>
+      <li>Predice y demuestra qué sucede con una clave incorrecta.</li>
+      <li>Explica por qué la contraseña no está escrita en el repositorio.</li>
+    </ul>
+  </main>
+</body>
+</html>

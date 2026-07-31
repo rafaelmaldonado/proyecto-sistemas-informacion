@@ -1,1 +1,82 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Código de ejemplo</title><link rel="stylesheet" href="../assets/course.css"></head><body><nav class="site-nav"><a href="../index.html">Inicio</a></nav><main class="page"><p class="kicker">Código de ejemplo</p><h1>Archivos listos para el prototipo</h1><p class="lede">Base de datos y validaciones del centro de adopción, alineadas con el modelo de la lección 4 y los casos de prueba CP-01..CP-04 de la lección 7.</p><div class="note"><strong>Léelo como referencia, no como plantilla.</strong> Este código resuelve <em>un</em> caso. Si lo copias tal cual sin entender cada línea, en la defensa de 15 minutos no podrás explicar por qué separaste las tablas, qué valida cada regla o por qué elegiste estas tecnologías — y esa defensa es el 40% de tu calificación. Úsalo para ver <em>cómo se ve</em> una solución correcta y luego constrúyela para tu organización, decidiendo tú cada parte.</div><table><thead><tr><th>Archivo</th><th>Qué contiene</th></tr></thead><tbody><tr><td><a href="database/schema.sql">database/schema.sql</a></td><td>Cuatro tablas con PK, FK, tipos y restricciones (3FN).</td></tr><tr><td><a href="database/seed.sql">database/seed.sql</a></td><td>Datos de ejemplo para capturas y pruebas.</td></tr><tr><td><a href="public/js/validaciones.js">public/js/validaciones.js</a></td><td>Reglas: ID único, vacuna con fecha, perro disponible.</td></tr><tr><td><a href="tests/validaciones.test.js">tests/validaciones.test.js</a></td><td>Pruebas unitarias y de rendimiento CP-01..CP-04.</td></tr></tbody></table><div class="note">Ejecuta las pruebas con <code>node code/tests/validaciones.test.js</code> y la base con <code>sqlite3 centro-adopcion.db &lt; code/database/schema.sql</code>.</div></main></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Código de ejemplo</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <nav class="site-nav"><a href="../index.html">Inicio</a></nav>
+  <main class="page">
+    <p class="kicker">Código de ejemplo ejecutable</p>
+    <h1>Prototipo conectado a SQLite</h1>
+    <p class="lede">El formulario registra perros y el listado consulta la misma base de datos. Es la implementación mínima necesaria para demostrar interfaz, código y persistencia.</p>
+
+    <div class="note"><strong>Adáptalo; no lo presentes como autoría propia.</strong> Cambia los datos y decisiones según tu organización. En la defensa debes demostrar el recorrido sin leer el código.</div>
+
+    <h2>1. Instalar Node.js</h2>
+    <ol class="steps">
+      <li>Entra a <a href="https://nodejs.org/en/download">nodejs.org/en/download</a> y descarga Node 24 LTS. En Windows usa el instalador <code>.msi</code>; en macOS, el instalador <code>.pkg</code>; en Linux, selecciona tu sistema y sigue el comando mostrado por la página oficial.</li>
+      <li>Ejecuta el instalador, conserva las opciones predeterminadas y vuelve a abrir la terminal al finalizar.</li>
+      <li>Comprueba la instalación:<pre><code>node --version</code></pre>Debe mostrar <code>v24...</code>. También funciona desde Node 22.5, versión en la que se incorporó <code>node:sqlite</code>.</li>
+    </ol>
+    <div class="note"><strong>No ejecutes <code>npm install</code>:</strong> este prototipo no usa paquetes externos; <code>node:http</code> y <code>node:sqlite</code> vienen con Node.</div>
+
+    <h2>2. Abrir el proyecto en la terminal</h2>
+    <p><code>cd</code> significa “cambiar de carpeta”. Sustituye la ruta del ejemplo por la carpeta donde guardaste el proyecto:</p>
+    <pre><code>cd ruta/al/proyecto-sistemas-informacion</code></pre>
+    <p>Comprueba que estás en la carpeta correcta:</p>
+    <pre><code>node --version
+ls code</code></pre>
+    <p>En Windows PowerShell puedes usar <code>dir code</code> en lugar de <code>ls code</code>. Debe aparecer <code>server.js</code>.</p>
+
+    <h2>3. Iniciar la aplicación</h2>
+    <pre><code>node code/server.js</code></pre>
+    <p>Este comando pide a Node ejecutar <code>server.js</code>. Si todo está bien, muestra <code>Prototipo disponible en http://localhost:8000</code>. Mantén esa terminal abierta y visita <a href="http://localhost:8000">http://localhost:8000</a> en el navegador.</p>
+    <div class="checkpoint"><strong>No abras los HTML con doble clic:</strong> la interfaz podría verse, pero no podría registrar ni consultar porque necesita que <code>server.js</code> atienda las rutas <code>/api/perros</code>.</div>
+    <p>Para detener la aplicación, vuelve a la terminal y presiona <kbd>Ctrl</kbd> + <kbd>C</kbd>. El archivo <code>code/database/centro-adopcion.db</code> conserva los registros.</p>
+
+    <h2>Archivos y responsabilidad</h2>
+    <table>
+      <thead><tr><th>Archivo</th><th>Qué demuestra</th></tr></thead>
+      <tbody>
+        <tr><td><a href="public/index.html">public/index.html</a></td><td>Panel principal y navegación de la aplicación.</td></tr>
+        <tr><td><a href="public/registrar.html">public/registrar.html</a></td><td>Interfaz accesible de entrada.</td></tr>
+        <tr><td><a href="public/perros.html">public/perros.html</a></td><td>Interfaz accesible de salida.</td></tr>
+        <tr><td><a href="public/app.js">public/app.js</a></td><td>Envía el formulario y actualiza el listado.</td></tr>
+        <tr><td><a href="server.js">server.js</a></td><td>Valida, ejecuta <code>INSERT</code> y responde al <code>SELECT</code>.</td></tr>
+        <tr><td><a href="backup.js">backup.js</a></td><td>Crea y restaura un respaldo cifrado sin sobrescribir la BD activa.</td></tr>
+        <tr><td><a href="database/schema.sql">database/schema.sql</a></td><td>Tablas, PK, FK y restricciones.</td></tr>
+        <tr><td><a href="tests/database.test.js">tests/database.test.js</a></td><td>Comprueba alta, consulta y rechazo de duplicados.</td></tr>
+        <tr><td><a href="tests/backup.test.js">tests/backup.test.js</a></td><td>Comprueba cifrado, restauración y clave incorrecta.</td></tr>
+        <tr><td><a href="tests/validaciones.test.js">tests/validaciones.test.js</a></td><td>Comprueba las reglas CP-01..CP-04.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. Ejecutar las pruebas</h2>
+    <p>Detén el servidor con <kbd>Ctrl</kbd> + <kbd>C</kbd> o abre una segunda terminal en la misma carpeta. Después ejecuta cada prueba por separado:</p>
+    <pre><code>node code/tests/database.test.js
+node code/tests/validaciones.test.js
+node code/tests/backup.test.js</code></pre>
+    <p>Cada comando debe imprimir un mensaje que empiece con <code>OK</code>. Comprueban la BD, las reglas CP-01..CP-04 y el respaldo cifrado.</p>
+
+    <h2>5. Crear y restaurar un respaldo cifrado</h2>
+    <p>Primero inicia la aplicación al menos una vez para crear la BD. Después detenla y ejecuta en macOS o Linux:</p>
+    <pre><code>BACKUP_PASSWORD='una-clave-larga-y-privada' node code/backup.js crear
+BACKUP_PASSWORD='una-clave-larga-y-privada' node code/backup.js restaurar</code></pre>
+    <p>En Windows PowerShell:</p>
+    <pre><code>$env:BACKUP_PASSWORD='una-clave-larga-y-privada'
+node code/backup.js crear
+node code/backup.js restaurar
+Remove-Item Env:BACKUP_PASSWORD</code></pre>
+    <p><code>crear</code> produce un archivo <code>.enc</code>; <code>restaurar</code> crea una BD separada y no sobrescribe la base activa. No publiques la contraseña, la BD ni su respaldo.</p>
+
+    <h2>6. Consultar SQLite directamente (opcional)</h2>
+    <p>Este comando requiere tener la herramienta <code>sqlite3</code> instalada; no es necesario para usar la aplicación:</p>
+    <pre><code>sqlite3 code/database/centro-adopcion.db "SELECT id_perro,nombre,estado FROM perro;"</code></pre>
+
+    <div class="checkpoint"><strong>Defensa y proceso:</strong> sigue la <a href="defensa.html">validación de conocimiento</a> antes de tomar capturas.</div>
+  </main>
+</body>
+</html>

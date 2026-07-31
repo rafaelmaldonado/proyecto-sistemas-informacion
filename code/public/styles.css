@@ -1,0 +1,31 @@
+:root { color-scheme: light; font: 18px/1.5 Arial, sans-serif; color: #102a43; background: #f4f7f7; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+.app-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem max(1rem, calc((100% - 950px) / 2)); color: white; background: #12304a; }
+.marca { color: white; font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+nav { display: flex; flex-wrap: wrap; gap: .5rem; }
+nav a { padding: .45rem .65rem; border-radius: .25rem; color: white; }
+nav a:hover, nav a:focus-visible, nav a[aria-current="page"] { color: #12304a; background: #ffc857; outline: none; }
+.app-main { max-width: 950px; margin: 0 auto; padding: 2.5rem 1rem; }
+.app-main > h1 { margin-bottom: .25rem; color: #12304a; }
+.introduccion { margin-top: 0; }
+.opciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.opcion { display: grid; gap: .5rem; min-height: 9rem; padding: 1.5rem; border: 3px solid #12304a; border-radius: .5rem; color: #102a43; background: white; text-decoration: none; }
+.opcion strong { color: #007b78; font-size: 1.3rem; }
+.opcion:hover, .opcion:focus-visible { outline: 4px solid #ffc857; outline-offset: 2px; }
+.pagina-formulario { max-width: 520px; }
+.pagina-listado { max-width: 800px; }
+section { border: 3px solid #12304a; border-radius: .5rem; background: white; overflow: hidden; }
+section h1 { margin: 0 0 1.5rem; padding: 1rem 1.5rem; color: white; background: #12304a; font-size: 1.3rem; }
+form { display: grid; gap: .55rem; padding: 0 1.5rem; }
+input, button { width: 100%; min-height: 2.7rem; padding: .5rem; font: inherit; border: 2px solid #102a43; border-radius: .25rem; }
+button { margin-top: 1rem; color: white; background: #007b78; font-weight: 700; cursor: pointer; }
+button:hover, button:focus-visible { background: #005e5c; outline: 3px solid #ffc857; outline-offset: 2px; }
+#mensaje { min-height: 1.5em; margin: .5rem 1.5rem 1rem; font-weight: 700; }
+form #mensaje { margin-inline: 0; }
+table { width: calc(100% - 3rem); margin: 0 1.5rem 1.5rem; border-collapse: collapse; }
+caption { margin-bottom: .75rem; text-align: left; }
+th, td { padding: .75rem; border: 1px solid #9aabb8; text-align: left; }
+tbody tr:nth-child(odd) { background: #edf6f5; }
+.descripcion { margin: .75rem .25rem 0; }
+@media (max-width: 700px) { .app-header { align-items: flex-start; flex-direction: column; } .opciones { grid-template-columns: 1fr; } }
